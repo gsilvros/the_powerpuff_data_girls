@@ -1,10 +1,10 @@
 {
-	"name": "raw",
+	"name": "raw_ambulatorio",
 	"properties": {
 		"description": "copy\n",
 		"activities": [
 			{
-				"name": "copy raw",
+				"name": "copy_ambulatorio",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -39,7 +39,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dataset_binario",
+						"referenceName": "dataset_binario_origem",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "susbecantt",
@@ -49,7 +49,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dataset_binario",
+						"referenceName": "dataset_binario_destino",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "raw",
