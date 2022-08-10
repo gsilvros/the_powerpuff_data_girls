@@ -1,5 +1,5 @@
 {
-	"name": "raw_hospitalar",
+	"name": "bronze_hospitalar",
 	"properties": {
 		"activities": [
 			{
@@ -51,7 +51,7 @@
 						"referenceName": "dataset_binario_destino",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "raw",
+							"container": "bronze",
 							"folder": "hospitalar"
 						}
 					}
