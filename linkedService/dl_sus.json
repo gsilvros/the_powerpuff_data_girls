@@ -1,0 +1,18 @@
+{
+	"name": "dl_sus",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://susbecantt.dfs.core.windows.net/",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "kv_powerpuff",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "token-sus"
+			}
+		}
+	}
+}
