@@ -6,10 +6,10 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"raw": {
+			"container": {
 				"type": "string"
 			},
-			"ambulatorio": {
+			"folder": {
 				"type": "string"
 			}
 		},
