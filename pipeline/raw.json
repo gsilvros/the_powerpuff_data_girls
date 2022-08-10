@@ -17,16 +17,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "BinarySource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "SIASUS",
-							"wildcardFileName": "*.csv",
-							"enablePartitionDiscovery": false
+							"wildcardFileName": "*",
+							"deleteFilesAfterCompletion": false
 						},
 						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
+							"type": "BinaryReadSettings"
 						}
 					},
 					"sink": {
@@ -39,7 +39,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dataset_csv",
+						"referenceName": "dataset_binario",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "susbecantt",
