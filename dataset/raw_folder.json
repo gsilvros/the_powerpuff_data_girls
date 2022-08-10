@@ -1,5 +1,5 @@
 {
-	"name": "raw_folder_origem_ambulatorio",
+	"name": "raw_folder",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dl_powerpuff",

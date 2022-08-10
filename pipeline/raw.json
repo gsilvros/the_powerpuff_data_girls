@@ -21,6 +21,7 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
+							"wildcardFileName": "*",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -50,14 +51,22 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "raw_folder_origem_ambulatorio",
-						"type": "DatasetReference"
+						"referenceName": "raw_folder",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "susbecantt",
+							"folder": "SIASUS"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "raw_folder_origem_ambulatorio",
-						"type": "DatasetReference"
+						"referenceName": "raw_folder",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "raw",
+							"folder": "ambulatorio"
+						}
 					}
 				]
 			}
