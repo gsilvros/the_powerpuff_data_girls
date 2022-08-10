@@ -1,5 +1,5 @@
 {
-	"name": "raw_folder",
+	"name": "dataset_csv",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dl_powerpuff",

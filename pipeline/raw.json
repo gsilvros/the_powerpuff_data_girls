@@ -21,7 +21,8 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"wildcardFileName": "*",
+							"wildcardFolderPath": "SIASUS",
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -29,29 +30,16 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "BinarySink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".csv"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "raw_folder",
+						"referenceName": "dataset_csv",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "susbecantt",
@@ -61,7 +49,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "raw_folder",
+						"referenceName": "dataset_binario",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "raw",
