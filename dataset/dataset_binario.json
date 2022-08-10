@@ -1,0 +1,24 @@
+{
+	"name": "dataset_binario",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dl_powerpuff",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"raw": {
+				"type": "string"
+			},
+			"ambulatorio": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			}
+		}
+	}
+}
