@@ -1,0 +1,11 @@
+{
+	"name": "kv_powerpuff",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-powerpuff.vault.azure.net/"
+		}
+	}
+}

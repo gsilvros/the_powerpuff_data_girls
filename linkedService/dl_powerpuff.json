@@ -1,0 +1,19 @@
+{
+	"name": "dl_powerpuff",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://thepowerpuffdatagirls.dfs.core.windows.net/",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "kv_powerpuff",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "token-powerpuff"
+			}
+		}
+	}
+}
