@@ -1,8 +1,8 @@
 {
-	"name": "dataset_binario",
+	"name": "dataset_binario_destino",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dl_sus",
+			"referenceName": "dl_powerpuff",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -17,7 +17,15 @@
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation"
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			}
 		}
 	}
