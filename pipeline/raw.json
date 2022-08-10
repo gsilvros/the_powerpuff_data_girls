@@ -50,13 +50,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "raw_folder",
+						"referenceName": "raw_folder_origem_ambulatorio",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "raw_folder",
+						"referenceName": "raw_folder_origem_ambulatorio",
 						"type": "DatasetReference"
 					}
 				]
