@@ -2,7 +2,7 @@
 	"name": "raw_folder_origem_ambulatorio",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dl_sus",
+			"referenceName": "dl_powerpuff",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
