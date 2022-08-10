@@ -2,7 +2,7 @@
 	"name": "dataset_binario",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dl_powerpuff",
+			"referenceName": "dl_sus",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
