@@ -21,7 +21,7 @@
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "SIHSUS",
-							"wildcardFileName": "susbecantt",
+							"wildcardFileName": "*.csv",
 							"deleteFilesAfterCompletion": false
 						},
 						"formatSettings": {
