@@ -57,22 +57,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "Bronze",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "copy_ambulatorio",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"isSequential": false
-				}
 			}
 		],
 		"annotations": []
