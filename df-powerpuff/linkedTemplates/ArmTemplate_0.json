@@ -11,14 +11,6 @@
 			"type": "string",
 			"defaultValue": "https://kv-powerpuff.vault.azure.net/"
 		},
-		"trigger_ambulatorio_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
-		},
-		"trigger_hospitalar_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
-		},
 		"dl_powerpuff_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://thepowerpuffdatagirls.dfs.core.windows.net/"
@@ -26,6 +18,14 @@
 		"dl_sus_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://susbecantt.dfs.core.windows.net/"
+		},
+		"trigger_ambulatorio_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
+		},
+		"trigger_hospitalar_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
 		}
 	},
 	"variables": {
@@ -41,48 +41,6 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('kv_powerpuff_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger_ambulatorio')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/susbecantt/blobs/SIASUS",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger_ambulatorio_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger_hospitalar')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/susbecantt/blobs/SIHSUS",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger_hospitalar_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
-					]
 				}
 			},
 			"dependsOn": []
@@ -352,6 +310,99 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/dataset_binario_origem')]",
 				"[concat(variables('factoryId'), '/datasets/dataset_binario_destino')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_ambulatorio')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "bronze_ambulatorio",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/susbecantt/blobs/SIASUS",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('trigger_ambulatorio_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/bronze_ambulatorio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_hospitalar')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "bronze_hospitalar",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/susbecantt/blobs/SIHSUS",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('trigger_hospitalar_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/bronze_hospitalar')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Execute_ambulatorio')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Pipeline1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "bronze_ambulatorio",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/bronze_ambulatorio')]"
 			]
 		}
 	]

@@ -57,17 +57,17 @@
 					"kv_powerpuff_properties_typeProperties_baseUrl": {
 						"value": "[parameters('kv_powerpuff_properties_typeProperties_baseUrl')]"
 					},
-					"trigger_ambulatorio_properties_typeProperties_scope": {
-						"value": "[parameters('trigger_ambulatorio_properties_typeProperties_scope')]"
-					},
-					"trigger_hospitalar_properties_typeProperties_scope": {
-						"value": "[parameters('trigger_hospitalar_properties_typeProperties_scope')]"
-					},
 					"dl_powerpuff_properties_typeProperties_url": {
 						"value": "[parameters('dl_powerpuff_properties_typeProperties_url')]"
 					},
 					"dl_sus_properties_typeProperties_url": {
 						"value": "[parameters('dl_sus_properties_typeProperties_url')]"
+					},
+					"trigger_ambulatorio_properties_typeProperties_scope": {
+						"value": "[parameters('trigger_ambulatorio_properties_typeProperties_scope')]"
+					},
+					"trigger_hospitalar_properties_typeProperties_scope": {
+						"value": "[parameters('trigger_hospitalar_properties_typeProperties_scope')]"
 					}
 				}
 			},
