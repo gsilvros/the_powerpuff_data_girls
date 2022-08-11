@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/gsilvros@emeal.nttdata.com"
+					"notebookPath": "/Users/gsilvros@emeal.nttdata.com/silver_ingestion"
 				},
 				"linkedServiceName": {
 					"referenceName": "dl_databricks",
