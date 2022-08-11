@@ -14,22 +14,6 @@
 					},
 					"waitOnCompletion": true
 				}
-			},
-			{
-				"name": "Execute Pipeline2",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Execute Pipeline1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"waitOnCompletion": true
-				}
 			}
 		],
 		"annotations": []
