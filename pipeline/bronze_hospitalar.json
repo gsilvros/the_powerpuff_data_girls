@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "copy_hospitalar",
-				"type": "Copy",
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -14,50 +14,17 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "BinarySource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": "SIHSUS",
-							"wildcardFileName": "*",
-							"deleteFilesAfterCompletion": false
-						},
-						"formatSettings": {
-							"type": "BinaryReadSettings"
-						}
-					},
-					"sink": {
-						"type": "BinarySink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "dataset_binario_origem",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "susbecantt",
-							"folder": "SIHSUS"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "dataset_binario_destino",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "bronze",
-							"folder": "hospitalar"
-						}
-					}
-				]
+				"linkedServiceName": {
+					"referenceName": "dl_databricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

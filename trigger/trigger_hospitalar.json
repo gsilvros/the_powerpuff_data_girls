@@ -8,6 +8,9 @@
 				"pipelineReference": {
 					"referenceName": "bronze_hospitalar",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"filename": "@triggerBody().fileName"
 				}
 			}
 		],
