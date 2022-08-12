@@ -14,6 +14,15 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/gsilvros@emeal.nttdata.com/Projeto_integrado/bronze_ingestion",
+					"baseParameters": {
+						"filename": {
+							"value": "@pipeline().parameters.filename",
+							"type": "Expression"
+						}
+					}
+				},
 				"linkedServiceName": {
 					"referenceName": "dl_databricks",
 					"type": "LinkedServiceReference"
