@@ -59,10 +59,7 @@
 			}
 		],
 		"parameters": {
-			"container": {
-				"type": "string"
-			},
-			"folder": {
+			"filename": {
 				"type": "string"
 			}
 		},
