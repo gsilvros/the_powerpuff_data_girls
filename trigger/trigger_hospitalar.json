@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "bronze_hospitalar",
+					"referenceName": "notebook_bronze",
 					"type": "PipelineReference"
 				},
 				"parameters": {
