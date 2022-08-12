@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "df-powerpuff"
 		},
+		"dl_databricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0811-140226-5u6jowjc"
+		},
 		"dl_powerpuff_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://thepowerpuffdatagirls.dfs.core.windows.net/"
@@ -19,9 +23,21 @@
 			"type": "string",
 			"defaultValue": "https://kv-powerpuff.vault.azure.net/"
 		},
+		"trigger_ambulatorio_properties_bronze_ambulatorio_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
 		"trigger_ambulatorio_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
+		},
+		"trigger_hospitalar_properties_notebook_bronze_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"trigger_hospitalar_properties_bronze_hospitalar_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
 		},
 		"trigger_hospitalar_properties_typeProperties_scope": {
 			"type": "string",
@@ -57,14 +73,26 @@
 					"kv_powerpuff_properties_typeProperties_baseUrl": {
 						"value": "[parameters('kv_powerpuff_properties_typeProperties_baseUrl')]"
 					},
+					"dl_databricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('dl_databricks_properties_typeProperties_existingClusterId')]"
+					},
 					"dl_powerpuff_properties_typeProperties_url": {
 						"value": "[parameters('dl_powerpuff_properties_typeProperties_url')]"
 					},
 					"dl_sus_properties_typeProperties_url": {
 						"value": "[parameters('dl_sus_properties_typeProperties_url')]"
 					},
+					"trigger_ambulatorio_properties_bronze_ambulatorio_parameters_filename": {
+						"value": "[parameters('trigger_ambulatorio_properties_bronze_ambulatorio_parameters_filename')]"
+					},
 					"trigger_ambulatorio_properties_typeProperties_scope": {
 						"value": "[parameters('trigger_ambulatorio_properties_typeProperties_scope')]"
+					},
+					"trigger_hospitalar_properties_notebook_bronze_parameters_filename": {
+						"value": "[parameters('trigger_hospitalar_properties_notebook_bronze_parameters_filename')]"
+					},
+					"trigger_hospitalar_properties_bronze_hospitalar_parameters_filename": {
+						"value": "[parameters('trigger_hospitalar_properties_bronze_hospitalar_parameters_filename')]"
 					},
 					"trigger_hospitalar_properties_typeProperties_scope": {
 						"value": "[parameters('trigger_hospitalar_properties_typeProperties_scope')]"

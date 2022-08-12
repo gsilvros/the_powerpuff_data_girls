@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "df-powerpuff"
 		},
+		"dl_databricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0811-140226-5u6jowjc"
+		},
 		"dl_powerpuff_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://thepowerpuffdatagirls.dfs.core.windows.net/"
@@ -19,9 +23,21 @@
 			"type": "string",
 			"defaultValue": "https://kv-powerpuff.vault.azure.net/"
 		},
+		"trigger_ambulatorio_properties_bronze_ambulatorio_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
 		"trigger_ambulatorio_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
+		},
+		"trigger_hospitalar_properties_notebook_bronze_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"trigger_hospitalar_properties_bronze_hospitalar_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
 		},
 		"trigger_hospitalar_properties_typeProperties_scope": {
 			"type": "string",
@@ -33,15 +49,14 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/bronze_ambulatorio')]",
+			"name": "[concat(parameters('factoryName'), '/notebook_bronze')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "copy\n",
 				"activities": [
 					{
-						"name": "copy_ambulatorio",
-						"type": "Copy",
+						"name": "Notebook_bronze",
+						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -52,131 +67,38 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFolderPath": "SIASUS",
-									"wildcardFileName": "*.csv",
-									"deleteFilesAfterCompletion": false
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
+							"notebookPath": "/Users/gsilvros@emeal.nttdata.com/Projeto_integrado/bronze_ingestion",
+							"baseParameters": {
+								"filename": {
+									"value": "@pipeline().parameters.filename",
+									"type": "Expression"
 								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
+							}
 						},
-						"inputs": [
-							{
-								"referenceName": "dataset_binario_origem",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "susbecantt",
-									"folder": "SIASUS"
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "dataset_binario_destino",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": "ambulatorio"
-								}
-							}
-						]
+						"linkedServiceName": {
+							"referenceName": "dl_databricks",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/dataset_binario_origem')]",
-				"[concat(variables('factoryId'), '/datasets/dataset_binario_destino')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/bronze_hospitalar')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "copy_hospitalar",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFolderPath": "SIHSUS",
-									"wildcardFileName": "*.csv",
-									"deleteFilesAfterCompletion": false
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "dataset_binario_origem",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "susbecantt",
-									"folder": "SIHSUS"
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "dataset_binario_destino",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": "hospitalar"
-								}
-							}
-						]
+				"parameters": {
+					"filename": {
+						"type": "string"
 					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+				},
+				"variables": {
+					"filename": {
+						"type": "String"
+					}
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/dataset_binario_origem')]",
-				"[concat(variables('factoryId'), '/datasets/dataset_binario_destino')]"
+				"[concat(variables('factoryId'), '/linkedServices/dl_databricks')]"
 			]
 		},
 		{
@@ -254,6 +176,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dl_databricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-247973449430578.18.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "kv_powerpuff",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "kv-databricks"
+					},
+					"existingClusterId": "[parameters('dl_databricks_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/kv_powerpuff')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dl_powerpuff')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -318,14 +264,16 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
 							"referenceName": "bronze_ambulatorio",
 							"type": "PipelineReference"
 						},
-						"parameters": {}
+						"parameters": {
+							"filename": "[parameters('trigger_ambulatorio_properties_bronze_ambulatorio_parameters_filename')]"
+						}
 					}
 				],
 				"type": "BlobEventsTrigger",
@@ -334,8 +282,7 @@
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('trigger_ambulatorio_properties_typeProperties_scope')]",
 					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
+						"Microsoft.Storage.BlobCreated"
 					]
 				}
 			},
@@ -349,14 +296,25 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "notebook_bronze",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"filename": "[parameters('trigger_hospitalar_properties_notebook_bronze_parameters_filename')]"
+						}
+					},
 					{
 						"pipelineReference": {
 							"referenceName": "bronze_hospitalar",
 							"type": "PipelineReference"
 						},
-						"parameters": {}
+						"parameters": {
+							"filename": "[parameters('trigger_hospitalar_properties_bronze_hospitalar_parameters_filename')]"
+						}
 					}
 				],
 				"type": "BlobEventsTrigger",
@@ -365,44 +323,169 @@
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('trigger_hospitalar_properties_typeProperties_scope')]",
 					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
+						"Microsoft.Storage.BlobCreated"
 					]
 				}
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/notebook_bronze')]",
 				"[concat(variables('factoryId'), '/pipelines/bronze_hospitalar')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Execute_ambulatorio')]",
+			"name": "[concat(parameters('factoryName'), '/bronze_ambulatorio')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
+						"name": "Copy_ambulatorio",
+						"type": "Copy",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"pipeline": {
-								"referenceName": "bronze_ambulatorio",
-								"type": "PipelineReference"
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "SIASUS",
+									"wildcardFileName": "*",
+									"deleteFilesAfterCompletion": false
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "dataset_binario_origem",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "susbecantt",
+									"folder": "SIASUA"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dataset_binario_destino",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": "SIASUS"
+								}
+							}
+						]
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/bronze_ambulatorio')]"
+				"[concat(variables('factoryId'), '/datasets/dataset_binario_origem')]",
+				"[concat(variables('factoryId'), '/datasets/dataset_binario_destino')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/bronze_hospitalar')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_hospitalar",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "SIHSUS",
+									"wildcardFileName": "*",
+									"deleteFilesAfterCompletion": false
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "dataset_binario_origem",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "susbecantt",
+									"folder": "SIHSUS"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dataset_binario_destino",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": "SIHSUS"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dataset_binario_origem')]",
+				"[concat(variables('factoryId'), '/datasets/dataset_binario_destino')]"
 			]
 		}
 	]

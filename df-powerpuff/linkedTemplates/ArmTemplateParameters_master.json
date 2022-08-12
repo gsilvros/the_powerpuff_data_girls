@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "df-powerpuff"
 		},
+		"dl_databricks_properties_typeProperties_existingClusterId": {
+			"value": "0811-140226-5u6jowjc"
+		},
 		"dl_powerpuff_properties_typeProperties_url": {
 			"value": "https://thepowerpuffdatagirls.dfs.core.windows.net/"
 		},
@@ -14,8 +17,17 @@
 		"kv_powerpuff_properties_typeProperties_baseUrl": {
 			"value": "https://kv-powerpuff.vault.azure.net/"
 		},
+		"trigger_ambulatorio_properties_bronze_ambulatorio_parameters_filename": {
+			"value": "@triggerBody().fileName"
+		},
 		"trigger_ambulatorio_properties_typeProperties_scope": {
 			"value": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
+		},
+		"trigger_hospitalar_properties_notebook_bronze_parameters_filename": {
+			"value": "@triggerBody().fileName"
+		},
+		"trigger_hospitalar_properties_bronze_hospitalar_parameters_filename": {
+			"value": "@triggerBody().fileName"
 		},
 		"trigger_hospitalar_properties_typeProperties_scope": {
 			"value": "/subscriptions/d44271f6-fec8-44b4-b79f-a0fd742c7602/resourceGroups/susbecantt/providers/Microsoft.Storage/storageAccounts/susbecantt"
