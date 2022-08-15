@@ -42,7 +42,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "susbecantt",
-							"folder": "SIASUA"
+							"folder": "SIASUS"
 						}
 					}
 				],
