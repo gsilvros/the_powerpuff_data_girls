@@ -94,7 +94,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"container": "susbecantt",
-									"folder": "SIASUA"
+									"folder": "SIASUS"
 								}
 							}
 						],
@@ -223,7 +223,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/gsilvros@emeal.nttdata.com/Projeto_integrado/bronze_ingestion",
+							"notebookPath": "/Users/gsilvros@emeal.nttdata.com/Projeto_integrado/create_mount_bronze",
 							"baseParameters": {
 								"filename": {
 									"value": "@pipeline().parameters.filename",
